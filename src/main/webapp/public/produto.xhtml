@@ -1,0 +1,119 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	template="../template/template.xhtml">
+
+	<ui:define name="title">Produto</ui:define>
+	<ui:define name="container">
+		<div class="col-xs-12 col-md-6">
+			<h1 style="font-family: 'Lato'">Produtos</h1>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<h:form styleClass="form-horizontal" id="formProduto">
+				<h:messages 
+					errorClass="alert alert-danger"
+					infoClass="alert alert-info"
+					style="list-style: none; margin: 0; padding: 0"
+				/>
+					<div class="form-group">
+						<h:outputLabel value="Descrição:"
+							styleClass="control-label col-sm-2" />
+						<div class="col-sm-6">
+							<h:inputText id="descricao" label="Descrição"
+								styleClass="form-control"
+								value="#{produtoController.produto.descricao}" p:placeholder=""
+								maxlength="50" required="true"
+								requiredMessage="O campo descrição é obrigatorio" />
+						</div>
+					</div>
+					<div class="form-group">
+						<h:outputLabel value="Sabor:" styleClass="control-label col-sm-2" />
+						<div class="col-sm-6">
+							<h:inputText id="sabor" label="Sabor" styleClass="form-control"
+								p:placeholder="" value="#{produtoController.produto.sabor}"
+								maxlength="50"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<h:outputLabel value="Valor:" styleClass="control-label col-sm-2" />
+						<div class="col-sm-6">
+							<h:inputText id="valor" label="Valor Unitario"
+								styleClass="form-control" p:placeholder="R$0.00"
+								value="#{produtoController.produto.valorProduto}" maxlength="50"
+								required="true" requiredMessage="O campo valor é obrigatorio" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<h:commandButton styleClass="btn btn-success"
+								data-dismiss="modal" action="#{produtoController.salvar}"
+								value="Salvar">
+								
+							</h:commandButton>
+							<h:commandButton styleClass="btn btn-default"
+								rendered="#{produtoController.modoEdicao}" data-dismiss="modal"
+								action="#{produtoController.cancelar}" value="Cancelar">
+								<f:ajax render="formProduto"></f:ajax>
+							</h:commandButton>
+
+						</div>
+					</div>
+				</h:form>
+				<h:dataTable id="tabela" value="#{produtoController.produtos}"
+					var="produto" rules="rows" cellpadding="5"
+					styleClass="table table-striped table-bordered">
+					<h:column id="columnCodigo">
+						<f:facet name="header">
+							<h:outputText style="font-family: 'Lato' " id="headerCodigo"
+								value="Codigo" />
+						</f:facet>
+						<h:outputText id="valorCodigo" value="#{produto.id}" />
+					</h:column>
+					<h:column id="columnDescrição">
+						<f:facet name="header">
+							<h:outputText style="font-family: 'Lato'" id="headerDescrição"
+								value="Descrição" />
+						</f:facet>
+						<h:outputText id="valorDescrição"
+							value="#{produto.descricao} - #{produto.sabor}" />
+					</h:column>
+
+					<h:column id="columnValor">
+						<f:facet name="header">
+							<h:outputText style="font-family: 'Lato'" id="headerValor"
+								value="Valor Unitario" />
+						</f:facet>
+						<h:outputText style="font-family: 'Lato'" id="valorValor"
+							value="#{produto.valorProduto}">
+							<f:convertNumber locale="pt_BR" minFractionDigits="2"
+								currencyCode="BRL" type="currency" />
+						</h:outputText>
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">Ações</f:facet>
+						<h:form>
+							<h:commandLink action="#{produtoController.editar(produto)}"
+								title="Editar">
+								<f:ajax render="formProduto" />
+								<h:graphicImage library="img" name="editar.png"></h:graphicImage>
+							</h:commandLink>
+							<h:commandLink action="#{produtoController.excluir(produto)}"
+								title="Excluir"
+								onclick="return window.confirm('Tem certeza que deseja excluir o produto?')">
+
+								<h:graphicImage library="img" name="excluir.png"></h:graphicImage>
+							</h:commandLink>
+						</h:form>
+					</h:column>
+				</h:dataTable>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

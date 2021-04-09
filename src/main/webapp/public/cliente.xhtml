@@ -1,0 +1,257 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	template="../template/template.xhtml">
+
+	<ui:define name="title">Cliente</ui:define>
+	<ui:define name="container">
+		<div class="col-xs-12 col-md-6">
+			<h1 style="font-family: 'Lato'">Clientes</h1>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<h:form styleClass="form-horizontal">
+
+					<h:messages errorClass="alert alert-danger"
+						infoClass="alert alert-info"
+						style="list-style: none; margin: 0; padding: 0" />
+
+					<div class="form-group">
+						<h:outputLabel value="Contratante:"
+							styleClass="control-label col-sm-2" />
+						<div class="col-sm-6">
+							<h:inputText id="contratante" label="Contratante"
+								styleClass="form-control"
+								value="#{clienteController.cliente.contratante}" required="true"
+								requiredMessage="O campo contratante é obrigatorio"
+								p:placeholder="Ex: Jão" maxlength="50" />
+						</div>
+					</div>
+					<div class="form-group">
+						<h:outputLabel value="CPF:" styleClass="control-label col-sm-2" />
+						<div class="col-sm-2">
+							<h:inputText id="cpf" label="cpf" styleClass="form-control"
+								value="#{clienteController.cliente.cpf}" required="true"
+								requiredMessage="O campo cpf é obrigatorio"
+								p:placeholder="999.999.999-99" maxlength="14" />
+						</div>
+					</div>
+					<div class="form-group">
+						<h:outputLabel value="Nome Noivo:"
+							styleClass="control-label col-sm-2" />
+						<div class="col-sm-6">
+							<h:inputText id="noivos" label="Nome Noivos"
+								styleClass="form-control" p:placeholder="Ex: Jão"
+								value="#{clienteController.cliente.nomeNoivo}" maxlength="50"
+								required="true"
+								requiredMessage="O campo nome noivos é obrigatorio" />
+						</div>
+					</div>
+					<div class="form-group">
+						<h:outputLabel value="Telefone:"
+							styleClass="control-label col-sm-2" />
+						<div class="col-sm-2">
+							<h:inputText id="telefone" label="Telefone"
+								styleClass="form-control" p:placeholder="(99)9999-9999"
+								value="#{clienteController.cliente.telefone}" maxlength="50"
+								required="true" requiredMessage="O campo telefone é obrigatorio" />
+						</div>
+					</div>
+					<div class="form-group">
+						<h:outputLabel value="Data de Nascimento:"
+							styleClass="control-label col-sm-2" />
+						<div class="col-sm-2">
+							<h:inputText id="nascimento" p:type="date"
+								styleClass="form-control" p:placeholder="dia/mês/ano"
+								value="#{clienteController.cliente.dataNascimento}"
+								required="true" requiredMessage="O campo email é obrigatorio">
+								<f:convertDateTime pattern="yyyy-MM-dd" locale="pt_BR" />
+							</h:inputText>
+						</div>
+					</div>
+					<div class="form-group">
+						<h:outputLabel value="Email:" styleClass="control-label col-sm-2" />
+						<div class="col-sm-6">
+							<h:inputText id="email" p:type="email" styleClass="form-control"
+								p:placeholder="jão@hightech.com"
+								value="#{clienteController.cliente.email}" required="true"
+								requiredMessage="O campo email é obrigatorio"
+								validatorMessage="E-mail incorreto">
+								<f:validateRegex
+									pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+							</h:inputText>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<h:outputLabel value="CEP:" styleClass="control-label col-sm-2" />
+						<div class="col-sm-3">
+							<h:inputText id="cep" label="Cep" styleClass="form-control"
+								value="#{clienteController.cliente.endereco.cep}"
+								p:placeholder="Ex: 99999-999" maxlength="50" required="true"
+								requiredMessage="O campo cep é obrigatorio" />
+						</div>
+						<h:panelGrid columns="2">
+							<h:commandButton value="Buscar CEP"
+								action="#{clienteController.buscarCep}" class="btn btn-info">
+								<f:ajax execute="cep" render="logradouro bairro uf cidade" />
+							</h:commandButton>
+						</h:panelGrid>
+					</div>
+
+					<div class="form-group">
+						<h:outputLabel value="Logradouro:"
+							styleClass="control-label col-sm-2" />
+						<div class="col-sm-6">
+							<h:inputText id="logradouro" label="Logradoruro"
+								styleClass="form-control" p:placeholder="Ex: Av. Florestal"
+								value="#{clienteController.cliente.endereco.logradouro}"
+								maxlength="50" required="true"
+								requiredMessage="O campo logradouro é obrigatorio" />
+						</div>
+					</div>
+					<div class="form-group">
+						<h:outputLabel value="Bairro:" styleClass="control-label col-sm-2" />
+						<div class="col-sm-6">
+							<h:inputText id="bairro" label="Bairro" styleClass="form-control"
+								p:placeholder="Ex: Santa Carmélia"
+								value="#{clienteController.cliente.endereco.bairro}"
+								maxlength="50" required="true"
+								requiredMessage="O campo bairro é obrigatorio" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<h:outputLabel value="Complemento:"
+							styleClass="control-label col-sm-2" />
+						<div class="col-sm-6">
+							<h:inputText id="complemento" label="complemento"
+								styleClass="form-control" p:placeholder="Casa, Apartamento etc."
+								value="#{clienteController.cliente.endereco.complemento}"
+								maxlength="50" required="true"
+								requiredMessage="O campo contratante é obrigatorio" />
+						</div>
+					</div>
+					<div class="form-group">
+						<h:outputLabel value="Numero:" styleClass="control-label col-sm-2" />
+						<div class="col-sm-2">
+							<h:inputText id="number" p:type="number" p:min="1" p:max="600000"
+								styleClass="form-control" p:placeholder="Ex: 123"
+								value="#{clienteController.cliente.endereco.numero}"
+								required="true" requiredMessage="O campo numero é obrigatorio">
+								<f:convertNumber minFractionDigits="0" />
+							</h:inputText>
+						</div>
+					</div>
+					<div class="form-group">
+						<h:outputLabel value="Cidade:" styleClass="control-label col-sm-2" />
+						<div class="col-sm-4">
+							<h:inputText id="cidade" label="Cidade" styleClass="form-control"
+								p:placeholder="Ex: Av. Florestal"
+								value="#{clienteController.cliente.endereco.cidade}"
+								maxlength="50" />
+						</div>
+					</div>
+					<div class="form-group">
+						<h:outputLabel value="Estado:" styleClass="control-label col-sm-2" />
+						<div class="col-sm-3">
+							<h:selectOneMenu id="estado" filter="true"
+								styleClass="form-control"
+								value="#{clienteController.cliente.estado}"
+								converter="#{estadoConverter}" required="true"
+								requiredMessage="O campo estado é obrigatório">
+								<f:selectItem noSelectionOption="true"
+									itemLabel="Selecione um Estado" />
+								<f:selectItems value="#{clienteController.estados}" var="estado"
+									itemValue="#{estado}" itemLabel="#{estado.uf}" />
+							</h:selectOneMenu>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<h:commandButton styleClass="btn btn-success"
+								action="#{clienteController.salvar}" value="Salvar">
+
+							</h:commandButton>
+							<h:commandButton styleClass="btn btn-default"
+								rendered="#{clienteController.modoEdicao}"
+								action="#{clienteController.cancelar}" value="Cancelar">
+								<f:ajax render="formCliente"></f:ajax>
+							</h:commandButton>
+
+						</div>
+					</div>
+
+				</h:form>
+
+
+
+				<h:dataTable id="tabela" value="#{clienteController.clientes}"
+					var="cliente" rules="rows" cellpadding="5"
+					styleClass="table table-striped table-bordered">
+					<h:column id="columnCodigo">
+						<f:facet name="header">
+							<h:outputText style="font-family: 'Lato' " id="headerCodigo"
+								value="Codigo" />
+						</f:facet>
+						<h:outputText id="valorCodigo" value="#{cliente.id}" />
+					</h:column>
+					<h:column id="columnContratante">
+						<f:facet name="header">
+							<h:outputText style="font-family: 'Lato'" id="headerContratante"
+								value="Contratante" />
+						</f:facet>
+						<h:outputText id="valorContratante" value="#{cliente.contratante}" />
+					</h:column>
+					<h:column id="columnCPF">
+						<f:facet name="header">
+							<h:outputText id="cpf" style="font-family: 'Lato'" value="CPF" />
+						</f:facet>
+						<h:outputText id="valorCPF" value="#{cliente.cpf}" />
+					</h:column>
+					<h:column id="columnTelefone">
+						<f:facet name="header">
+							<h:outputText style="font-family: 'Lato'" id="telefone"
+								value="Telefone" />
+						</f:facet>
+						<h:outputText style="font-family: 'Lato'" id="valorTelefone"
+							value="#{cliente.telefone}" />
+					</h:column>
+					<h:column id="columnEmail">
+						<f:facet name="header">
+							<h:outputText style="font-family: 'Lato'" id="headerEmail"
+								value="Email" />
+						</f:facet>
+						<h:outputText id="email2" value="#{cliente.email}" />
+					</h:column>
+					<h:column id="columnNoivos">
+						<f:facet name="header">
+							<h:outputText id="headerNoivos" value="Noivos" />
+						</f:facet>
+						<h:outputText id="valorNoivos" value="#{cliente.nomeNoivo}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Ações</f:facet>
+						<h:form>
+							<h:commandLink action="#{clienteController.editar(cliente)}"
+								title="Editar">
+								<h:graphicImage library="img" name="editar.png"></h:graphicImage>
+							</h:commandLink>
+							<h:commandLink action="#{clienteController.excluir(cliente)}"
+								title="Excluir"
+								onclick="return window.confirm('Tem certeza que deseja excluir o cliente?')">
+								<h:graphicImage library="img" name="excluir.png"></h:graphicImage>
+							</h:commandLink>
+						</h:form>
+					</h:column>
+				</h:dataTable>
+
+			</div>
+		</div>
+
+	</ui:define>
+</ui:composition>

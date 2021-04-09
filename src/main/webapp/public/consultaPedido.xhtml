@@ -1,0 +1,149 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf" template="../template/template.xhtml">
+
+	<div class="container">
+		<ui:define name="container">
+			<div class="col-xs-12 col-md-6">
+				<h1 style="font-family: 'Lato'">Pesquisar Contratos</h1>
+			</div>
+			<h:form id="formPesquisa" class="form-inline">
+				<h:panelGrid columns="2" style="width: 100%; margin-top: 20px"
+					columnClasses="rotulo, campo">
+
+					<div class="control-group" id="scrollable-dropdown-menu">
+						<h:outputLabel for="contratante" value="Contratante:"
+							class="col-xs-2 col-form-label" />
+						<div class="col-xs-10">
+							<h:inputText size="40" id="contratante"
+								value="#{pesquisaPedidoController.filtro.contratante}"
+								styleClass="form-control" />
+						</div>
+					</div>
+
+
+					<div class="control-group">
+						<h:outputLabel for="datapedido" value="Data Pedido:"
+							class="col-xs-2 col-form-label" />
+						<div class="col-xs-10">
+							<h:panelGroup>
+								<h:inputText size="10" p:type="date" id="datapedido"
+									value="#{pesquisaPedidoController.filtro.dataCriacaoDe}"
+									class="form-control">
+									<f:convertDateTime pattern="yyyy-MM-dd" locale="pt_BR" />
+								</h:inputText>
+	    			a
+	    			<h:inputText size="10" p:type="date"
+									value="#{pesquisaPedidoController.filtro.dataCriacaoAte}"
+									class="form-control">
+									<f:convertDateTime pattern="yyyy-MM-dd" locale="pt_BR" />
+								</h:inputText>
+							</h:panelGroup>
+
+						</div>
+					</div>
+
+					<div class="control-group">
+						<h:outputLabel for="dataentrega" value="Data Entrega:"
+							class="col-xs-2 col-form-label" />
+						<div class="col-xs-10">
+							<h:panelGroup>
+								<h:inputText size="10" p:type="date" id="dataentrega"
+									value="#{pesquisaPedidoController.filtro.dataCriacaoDe}"
+									class="form-control">
+									<f:convertDateTime pattern="yyyy-MM-dd" locale="pt_BR" />
+								</h:inputText>
+	    			a
+	    			<h:inputText size="10" p:type="date"
+									value="#{pesquisaPedidoController.filtro.dataCriacaoAte}"
+									class="form-control">
+									<f:convertDateTime pattern="yyyy-MM-dd" locale="pt_BR" />
+								</h:inputText>
+							</h:panelGroup>
+
+
+						</div>
+					</div>
+					<br />
+					<br />
+					<h:commandButton styleClass="btn btn-success"
+						actionListener="#{pesquisaPedidoController.pesquisar}"
+						value="Pesquisar" />
+
+
+
+				</h:panelGrid>
+
+			</h:form>
+			<br />
+					<br />
+			<h:form id="formTabela">
+
+
+				<h:dataTable id="tabela"
+					value="#{pesquisaPedidoController.pedidosFiltrados}" var="pedido"
+					class="table table-striped table-bordered"
+					rowClasses="OddRow, EvenRow">
+					<h:column id="columnCodigo">
+						<f:facet name="header">
+							<h:outputText style="font-family: 'Lato' " id="headerCodigo"
+								value="Codigo" />
+						</f:facet>
+						<h:outputText id="valorCodigo" value="#{pedido.id}" />
+					</h:column>
+
+					<h:column id="columnContratante">
+						<f:facet name="header">
+							<h:outputText style="font-family: 'Lato'" id="headerContratante"
+								value="Contratante" />
+						</f:facet>
+						<h:outputText id="valorContratante"
+							value="#{pedido.cliente.contratante}" />
+					</h:column>
+
+
+					<h:column id="columnDataPedido">
+						<f:facet name="header">
+							<h:outputText id="headerDataPedido" style="font-family: 'Lato'"
+								value="DataPedido" />
+						</f:facet>
+						<h:outputText id="valorDataPedido" value="#{pedido.dataPedido}">
+							<f:convertDateTime locale="pt_BR" />
+						</h:outputText>
+					</h:column>
+					<h:column id="columnDataEntrega">
+						<f:facet name="header">
+							<h:outputText style="font-family: 'Lato'" id="headerDataEntrega"
+								value="DataEntrega" />
+						</f:facet>
+						<h:outputText style="font-family: 'Lato'" id="valorDataEntrega"
+							value="#{pedido.dataEntrega}">
+							<f:convertDateTime locale="pt_BR" />
+						</h:outputText>
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">Ação</f:facet>
+						<h:commandButton styleClass="btn btn-danger"
+							action="#{pesquisaPedidoController.cancelar}" value="Cancelar">
+
+						</h:commandButton>
+						<h:commandButton value="Vizualizar"
+							action="#{pesquisaPedidoController.irParaContrato(pedido)}"
+							styleClass="btn btn-warning">
+							<f:setPropertyActionListener
+								target="#{pesquisaPedidoController.pedido}" value="#{pedido}" />
+						</h:commandButton>
+
+					</h:column>
+
+				</h:dataTable>
+			</h:form>
+		</ui:define>
+	</div>
+
+</ui:composition>

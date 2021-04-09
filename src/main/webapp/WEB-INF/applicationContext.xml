@@ -1,0 +1,25 @@
+<beans
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd"
+>
+    <!--
+    ATENÇÃO: Este arquivo aqui não é utilizado. Está no projeto, simplesmente, para demonstrar o uso
+    da configuração do escopo de VIEW através de XML.
+
+    O projeto original está sendo configurado através da classe JsfSpringWebApplicationInitializer.
+    -->
+
+    <bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+        <description>
+            Configuração do escopo de VIEW.
+        </description>
+        <property name="scopes">
+            <map>
+                <entry key="view">
+                    <bean class="br.com.fdp.pedidos.controller.util.ViewScope"/>
+                </entry>
+            </map>
+        </property>
+    </bean>
+</beans>

@@ -1,0 +1,105 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf" template="../template/template.xhtml">
+	<div class="container">
+		<ui:define name="container">
+			<div class="col-xs-12 col-md-6">
+				<h1 style="font-family: 'Lato'; text-align: center">Contrato</h1>
+			</div>
+			<h:form>
+				<div class="container text-center">
+
+					<br />
+					<div class="row">
+						<div class="col-sm-12">
+							<p style="font-family: 'Lato'" align="justific">
+								CONTRATANTE: <strong><h:outputText
+										value="#{pesquisaPedidoController.pedido.cliente.contratante}" /></strong>
+								brasileiro(a), Endereço: <strong><h:outputText
+										value="#{pesquisaPedidoController.pedido.cliente.endereco.logradouro}" /></strong>,
+								Bairro: <strong><h:outputText
+										value="#{pesquisaPedidoController.pedido.cliente.endereco.bairro}" /></strong>,
+								Complemento:<strong><h:outputText
+										value="#{pesquisaPedidoController.pedido.cliente.endereco.complemento}" /></strong>,
+								Numero:<strong><h:outputText
+										value="#{pesquisaPedidoController.pedido.cliente.endereco.numero}" /></strong>,
+								CEP:<strong><h:outputText
+										value="#{pesquisaPedidoController.pedido.cliente.endereco.cep}" /></strong>,
+								Estado: <strong><h:outputText
+										value="#{pesquisaPedidoController.pedido.cliente.estado.uf}" /></strong>,
+								CPF: <strong><h:outputText
+										value="#{pesquisaPedidoController.pedido.cliente.cpf}" /></strong>
+								Telefone:<strong><h:outputText
+										value="#{pesquisaPedidoController.pedido.cliente.telefone}" /></strong>
+							</p>
+
+							<p>CONTRATADO : Larisce Maia e Souza
+								brasileiro(a), residente e domiciliado(a) na Av: Noroeste, n°
+								10624, Cidade de Campo Grande, Estado MS, CPF ou CNPJ:
+								015359691-05. Contato 9240-6250 ou 3387-2941, e-mail
+								contato@larimaia.com.br, dados bancários: Ag: 2201 Conta
+								corrente: 66638- 6 BRADESCO.</p>
+
+							<p>Referente à Prestação de Serviços de
+								confecção de doces "bem casados" conforme as especificações
+								abaixo:</p>
+
+							<p>
+								Quantidade: <strong><h:outputText
+										value="#{pesquisaPedidoController.itemPedido.quantidade}" /></strong>
+								Sabor: <strong><h:outputText
+										value="#{pesquisaPedidoController.itemPedido.produto.sabor}" /></strong>
+							</p>
+							<p>Valor Total:<strong><h:outputText
+										value="#{pesquisaPedidoController.pedido.valorTotal}" /></strong> Forma de
+								pagamento: <strong><h:outputText
+										value="#{pesquisaPedidoController.pedido.formaPagamento}" /></strong></p>
+							<p>Embrulho:<strong><h:outputText
+										value="#{pesquisaPedidoController.itemPedido.embrulho.descricao}" /></strong></p>
+							<p>Data: 25-03-2017 Cerimonial:<strong><h:outputText
+										value="#{pesquisaPedidoController.pedido.cerimonial.nome}" /></strong>
+								Buffet:<strong><h:outputText
+										value="#{pesquisaPedidoController.pedido.nomeBuffet}" /></strong></p>
+							<p>Retirada: Cerimonial ( ) Lari Maia ( )
+								Outros ( )</p>
+							<p>Durabilidade dos bem casados: O bem
+								casado deve ser armazenado na geladeira, e dura até 7 dias. Fora
+								da geladeira eles duram apenas 2 dias, não é aconselhável
+								comê-lo após esse tempo pois pode estar azedo.</p>
+							<p>A CONTRATANTE deverá fornecer à CONTRATADA todas as informações necessárias à realização dos
+								serviços</p>
+							<h3 style="font-family: 'Lato'">Rescisão</h3>
+							<p>Caso haja interesse na rescisão do
+								contrato, a parte interessada notificará a outra, por escrito,
+								com antecedência mínima de (10) dias. Pagará multa de (30)% do
+								valor deste contrato, corrigido no momento do pagamento,
+								qualquer das partes que der causa à rescisão do presente
+								instrumento por não cumprir as obrigações aqui assumidas</p>
+							<p>
+								O contratante deve efetuar o pagamento ate a data do evento.
+								Data: <strong><h:outputText
+										value="#{pesquisaPedidoController.pedido.dataEntrega}">
+										<f:convertDateTime pattern="dd/MM/yyyy " locale="Pt_BR" />
+									</h:outputText> </strong> Campo Grande MS
+							</p>
+
+
+
+							<p>Assinatura do CONTRATANTE</p><p>Assinatura do
+								CONTRATADO</p>
+
+						</div>
+					</div>
+				</div>
+
+
+
+
+			</h:form>
+		</ui:define>
+	</div>
+</ui:composition>

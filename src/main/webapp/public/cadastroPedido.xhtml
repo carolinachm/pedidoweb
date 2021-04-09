@@ -1,0 +1,348 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://xmlns.jcp.org/jsf/passthrough" xmlns:jsf="http://xmlns.jcp.org/jsf"
+				template="../template/template.xhtml">
+
+	<ui:define name="container">
+
+		<f:metadata>
+			<f:viewParam name="id" value="#{pedidoController.pedido.id}" />
+
+			<f:viewAction action="#{pedidoController.buscar}"
+				if="#{param.id ne null}" />
+		</f:metadata>
+
+		<div class="row">
+			<div class="col-xs-12">
+				<h:form styleClass="form-horizontal" id="formTabela">
+
+					<h:panelGroup layout="block" styleClass="form-group">
+						<h:messages errorClass="alert alert-danger"
+							infoClass="alert alert-info"
+							style="list-style: none; margin: 0; padding: 0" />
+					</h:panelGroup>
+					<fieldset>
+
+						<!-- Form Name -->
+						<legend>Cadastro de Contrato</legend>
+
+
+						<div class="form-group">
+							<h:outputLabel value="CPF:" styleClass="control-label col-sm-2" />
+							<div class="col-sm-2">
+								<h:inputText id="cpf" label="Cep" styleClass="form-control"
+											 value="#{pedidoController.cliente.cpf}"
+											 p:placeholder="Ex: 999.999.999-99" maxlength="50" required="true"
+											 requiredMessage="O campo cpf é obrigatorio" />
+							</div>
+							<h:panelGrid columns="2">
+								<h:commandButton value="Buscar CPF"
+												 action="#{pedidoController.buscarClientePorCPF}" class="btn btn-info">
+									<f:ajax execute="cpf" render="cliente" process="@this"/>
+								</h:commandButton>
+								<h:outputLink value="cliente.xhtml?id=#{pedido.cliente.id}"
+											  title="Adicionar Cliente">
+									<h:graphicImage library="img" name="plus.png" width="40" height="40"></h:graphicImage>
+								</h:outputLink>
+							</h:panelGrid>
+						</div>
+						<div class="form-group">
+							<h:outputLabel value="Cliente:"
+										   styleClass="control-label col-sm-2" />
+							<div class="col-sm-6">
+								<h:inputText id="cliente" label="Cliente"
+											 styleClass="form-control" p:placeholder="Ex: Nome"
+											 value="#{pedidoController.cliente.contratante}"
+											 maxlength="50" />
+							</div>
+						</div>
+						<div class="form-group">
+							<h:outputLabel value="Cerimonial:"
+								styleClass="control-label col-sm-2" />
+							<div class="col-sm-6">
+								<h:selectOneMenu id="cerimonial" filter="true"
+									styleClass="form-control"
+									value="#{pedidoController.pedido.cerimonial}"
+									converter="#{cerimonialConverter}" required="true">
+									<f:selectItem noSelectionOption="true"
+										itemLabel="Selecione um Cerimonial" />
+									<f:selectItems value="#{pedidoController.cerimoniais}" var="ce"
+										itemValue="#{ce}" itemLabel="#{ce.nome}" />
+								</h:selectOneMenu>
+							</div>
+						</div>
+						<div class="form-group">
+							<h:outputLabel value="Buffet:"
+								styleClass="control-label col-sm-2" />
+							<div class="col-sm-6">
+								<h:inputText id="buffet" label="Buffet"
+									styleClass="form-control"
+									value="#{pedidoController.pedido.nomeBuffet}" maxlength="50" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<h:outputLabel value="Data da Assinatura do Contrato:"
+								styleClass="control-label col-sm-2" />
+							<div class="col-sm-3">
+								<h:inputText id="pedido" p:type="date" styleClass="form-control"
+									p:placeholder="dia/mês/ano"
+									value="#{pedidoController.pedido.dataPedido}">
+									<f:convertDateTime pattern="yyyy-MM-dd" required="true" />
+								</h:inputText>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<h:outputLabel value="Data Entrega:"
+								styleClass="control-label col-sm-2" />
+							<div class="col-sm-3">
+								<h:inputText id="entrega" p:type="date"
+									styleClass="form-control" p:placeholder="dia/mês/ano"
+									value="#{pedidoController.pedido.dataEntrega}" required="true">
+									<f:convertDateTime pattern="yyyy-MM-dd" />
+								</h:inputText>
+							</div>
+						</div>
+
+					</fieldset>
+
+					<br />
+					<fieldset>
+						<legend>Endereço de Entrega</legend>
+
+						<div class="form-group">
+							<h:outputLabel value="CEP:" styleClass="control-label col-sm-2" />
+							<div class="col-sm-2">
+								<h:inputText id="cep" label="Cep" styleClass="form-control"
+									value="#{pedidoController.pedido.enderecoEntrega.cep}"
+									p:placeholder="Ex: 99999-999" maxlength="50" required="true"
+									requiredMessage="O campo cep é obrigatorio" />
+							</div>
+							<h:panelGrid columns="2">
+								<h:commandButton value="Buscar CEP"
+									action="#{pedidoController.buscarCep}" class="btn btn-info">
+									<f:ajax execute="cep" render="logradouro bairro uf cidade" />
+								</h:commandButton>
+							</h:panelGrid>
+						</div>
+
+						<div class="form-group">
+							<h:outputLabel value="Logradouro:"
+								styleClass="control-label col-sm-2" />
+							<div class="col-sm-6">
+								<h:inputText id="logradouro" label="Logradoruro"
+									styleClass="form-control" p:placeholder="Ex: Av. Florestal"
+									value="#{pedidoController.pedido.enderecoEntrega.logradouro}"
+									maxlength="50" required="true"
+									requiredMessage="O campo logradouro é obrigatorio" />
+							</div>
+						</div>
+						<div class="form-group">
+							<h:outputLabel value="Bairro:"
+								styleClass="control-label col-sm-2" />
+							<div class="col-sm-6">
+								<h:inputText id="bairro" label="Bairro"
+									styleClass="form-control" p:placeholder="Ex: Santa Carmélia"
+									value="#{pedidoController.pedido.enderecoEntrega.bairro}"
+									maxlength="50" required="true"
+									requiredMessage="O campo bairro é obrigatorio" />
+							</div>
+						</div>
+
+						<div class="form-group">
+							<h:outputLabel value="Complemento:"
+								styleClass="control-label col-sm-2" />
+							<div class="col-sm-6">
+								<h:inputText id="complemento" label="complemento"
+									styleClass="form-control"
+									p:placeholder="Casa, Apartamento etc."
+									value="#{pedidoController.pedido.enderecoEntrega.complemento}"
+									maxlength="50" required="true"
+									requiredMessage="O campo contratante é obrigatorio" />
+							</div>
+						</div>
+						<div class="form-group">
+							<h:outputLabel value="Numero:"
+								styleClass="control-label col-sm-2" />
+							<div class="col-sm-2">
+								<h:inputText id="number" p:type="number" p:min="1"
+									p:max="600000" styleClass="form-control"
+									p:placeholder="Ex: 123"
+									value="#{pedidoController.pedido.enderecoEntrega.numero}"
+									required="true" requiredMessage="O campo numero é obrigatorio">
+									<f:convertNumber minFractionDigits="0" />
+								</h:inputText>
+							</div>
+						</div>
+					</fieldset>
+					<br />
+					<fieldset>
+						<legend>Adicionar Item</legend>
+						<div class="form-group">
+							<h:outputLabel value="Produto:"
+								styleClass="control-label col-sm-2" />
+							<div class="col-sm-6">
+								<h:selectOneMenu id="produto" filter="true"
+									value="#{pedidoController.itemPedido.produto}"
+									valueChangeListener="#{pedidoController.carregarValorProduto}"
+									converter="#{produtoConverter}" styleClass="form-control">
+
+									<f:selectItem noSelectionOption="true"
+										itemLabel=".:Selecione um produto:. " />
+									<f:selectItems value="#{pedidoController.produtos}"
+										var="produto" itemValue="#{produto}"
+										itemLabel="#{produto.descricao} - #{produto.sabor}" />
+									<f:ajax render="valorProduto" event="change" />
+
+								</h:selectOneMenu>
+							</div>
+
+
+						</div>
+						<div class="form-group">
+							<h:outputLabel value="Valor Produto:"
+								styleClass="control-label col-sm-2" />
+							<div class="col-sm-6">
+								<h:inputText id="valorProduto"
+									value="#{pedidoController.itemPedido.valorProduto}"
+									styleClass="form-control">
+
+									<f:convertNumber minFractionDigits="2" />
+								</h:inputText>
+							</div>
+						</div>
+						<div class="form-group">
+							<h:outputLabel value="Embrulho:"
+								styleClass="control-label col-sm-2" />
+							<div class="col-sm-6">
+								<h:selectOneMenu id="embrulho" filter="true"
+									value="#{pedidoController.itemPedido.embrulho}"
+									converter="#{embrulhoConverter}"
+									valueChangeListener="#{pedidoController.carregarValorEmbrulho}"
+									styleClass="form-control">
+									<f:selectItem noSelectionOption="true"
+										itemLabel=".:Selecione um embrulho:. " />
+									<f:selectItems value="#{pedidoController.embrulhos}"
+										var="embrulho" itemValue="#{embrulho}"
+										itemLabel="#{embrulho.descricao}" />
+									<f:ajax render="valorEmbrulho" event="change" />
+
+								</h:selectOneMenu>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<h:outputLabel value="Valor Embrulho:"
+								styleClass="control-label col-sm-2" />
+							<div class="col-sm-6">
+								<h:inputText id="valorEmbrulho"
+									value="#{pedidoController.itemPedido.valorEmbrulho}"
+									styleClass="form-control">
+
+									<f:convertNumber minFractionDigits="2" />
+								</h:inputText>
+							</div>
+						</div>
+						<div class="form-group">
+							<h:outputLabel value="Quantidade:"
+								styleClass="control-label col-sm-2" />
+							<div class="col-sm-2">
+								<h:inputText value="#{pedidoController.itemPedido.quantidade}"
+									styleClass="form-control" id="numero" p:type="number" />
+							</div>
+						</div>
+
+
+					</fieldset>
+
+					<br />
+					<h:commandButton action="#{pedidoController.adicionarItemPedido}"
+						value="Adicionar" class="btn btn-warning">
+						<f:ajax execute="@form" render="@form"></f:ajax>
+					</h:commandButton>
+					<br />
+					<br />
+
+					<h:dataTable id="tabelaItem"
+						value="#{pedidoController.pedido.itensPedido}" var="item"
+						styleClass="dados-os table table-striped table-bpedidoed table-hover">
+
+						<h:column>
+							<f:facet name="header">Valor Produto</f:facet>
+							<h:outputText value="#{item.valorProduto}">
+								<f:convertNumber locale="pt_BR" minFractionDigits="2"
+									currencyCode="BRL" type="currency" />
+							</h:outputText>
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Valor Embrulho</f:facet>
+							<h:outputText value="#{item.valorEmbrulho}">
+								<f:convertNumber locale="pt_BR" minFractionDigits="2"
+									currencyCode="BRL" type="currency" />
+							</h:outputText>
+						</h:column>
+						<h:column>
+							<f:facet name="header">Quantidade</f:facet>
+							<h:outputText value="#{item.quantidade}"></h:outputText>
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Valor Parcial</f:facet>
+							<h:outputText value="#{item.precoParcial}">
+								<f:convertNumber locale="pt_BR" minFractionDigits="2"
+									currencyCode="BRL" type="currency" />
+							</h:outputText>
+						</h:column>
+						<h:column>
+							<h:commandLink action="#{pedidoController.excluirPedido(item)}">
+								<h:graphicImage library="img" name="excluir.png" />
+								<f:setPropertyActionListener
+									target="#{pedidoController.itemPedido}" value="#{item}" />
+							</h:commandLink>
+						</h:column>
+					</h:dataTable>
+
+					<h:panelGrid columns="2">
+						<h:outputLabel value="Total: R$" />
+						<h:outputText value="#{pedidoController.pedido.valorTotal}"
+							id="valorTotal">
+							<f:convertNumber locale="pt_BR" minFractionDigits="2" />
+						</h:outputText>
+
+
+					</h:panelGrid>
+
+					<br />
+
+					<h:panelGrid columns="2">
+
+						<div class="panel-body">Forma de Pagamento</div>
+						<h:selectOneMenu id="formaPagamento"
+							value="#{pedidoController.pedido.formaPagamento}"
+							styleClass="form-control col-md-3">
+							<f:selectItem itemLabel="Selecione" />
+							<f:selectItems value="#{pedidoController.formaPagamento}"
+								var="formaPagamento" itemValue="#{formaPagamento}"
+								itemLabel="#{formaPagamento.descricao}" />
+						</h:selectOneMenu>
+					</h:panelGrid>
+					<br />
+
+
+					<h:commandButton styleClass="btn btn-success"
+						action="#{pedidoController.salvar}" value="Salvar">
+
+					</h:commandButton>
+					<h:commandButton styleClass="btn btn-default"
+						action="#{pedidoController.cancelar}" value="Cancelar">
+						<f:ajax render="@form"></f:ajax>
+					</h:commandButton>
+				</h:form>
+			</div>
+		</div>
+
+	</ui:define>
+</ui:composition>

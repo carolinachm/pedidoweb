@@ -1,0 +1,104 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	template="../template/template.xhtml">
+
+	<ui:define name="title">Estado</ui:define>
+	<ui:define name="container">
+		<div class="col-xs-12 col-md-6">
+			<h1 style="font-family: 'Lato'">Estados</h1>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<h:form styleClass="form-horizontal" id="formEstado">
+				<h:messages 
+					errorClass="alert alert-danger"
+					infoClass="alert alert-info"
+					style="list-style: none; margin: 0; padding: 0"
+				/>
+					<div class="form-group">
+						<h:outputLabel value="UF:" styleClass="control-label col-sm-2" />
+						<div class="col-sm-6">
+							<h:inputText id="uf" label="UF:" styleClass="form-control"
+								value="#{estadoController.estado.uf}" p:placeholder="UF"
+								maxlength="50" converter="#{upperCaseConverter}" required="true"
+								requiredMessage="O campo uf é obrigatorio" />
+							<!--  -->
+						</div>
+					</div>
+					<div class="form-group">
+						<h:outputLabel value="Nome:" styleClass="control-label col-sm-2" />
+						<div class="col-sm-6">
+							<h:inputText id="nome" label="Nome:" styleClass="form-control"
+								value="#{estadoController.estado.nome}" p:placeholder="Nome"
+								maxlength="50" required="true"
+								requiredMessage="O campo nome é obrigatorio" />
+							<!--  converter=""-->
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<h:commandButton styleClass="btn btn-success"
+								action="#{estadoController.salvar}" value="Salvar">
+							
+							</h:commandButton>
+							<h:commandButton styleClass="btn btn-default"
+								rendered="#{estadoController.modoEdicao}"
+								action="#{estadoController.cancelar}" value="Cancelar">
+								<f:ajax render="formEstado"></f:ajax>
+							</h:commandButton>
+
+						</div>
+					</div>
+				</h:form>
+				<h:dataTable id="tabela" value="#{estadoController.estados}"
+					var="estado" rules="rows" cellpadding="5"
+					styleClass="table table-striped table-bordered">
+					<h:column id="columnCodigo">
+						<f:facet name="header">
+							<h:outputText style="font-family: 'Lato' " id="headerCodigo"
+								value="Codigo" />
+						</f:facet>
+						<h:outputText id="valorCodigo" value="#{estado.id}" />
+					</h:column>
+					<h:column id="columnUF">
+						<f:facet name="header">
+							<h:outputText style="font-family: 'Lato'" id="headerUF"
+								value="UF" />
+						</f:facet>
+						<h:outputText id="valorUF" value="#{estado.uf}" />
+					</h:column>
+
+					<h:column id="columnNome">
+						<f:facet name="header">
+							<h:outputText style="font-family: 'Lato'" id="headerNome"
+								value="Nome" />
+						</f:facet>
+						<h:outputText id="valorNome" value="#{estado.nome}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Ações</f:facet>
+						<h:form>
+							<h:commandLink action="#{estadoController.editar(estado)}"
+								title="Editar">
+								<h:graphicImage library="img" name="editar.png"></h:graphicImage>
+								<f:ajax render="formEstado" />
+							</h:commandLink>
+							<h:commandLink action="#{estadoController.excluir(estado)}"
+								title="Excluir"
+								onclick="return window.confirm('Tem certeza que deseja excluir o estado?')">
+
+								<h:graphicImage library="img" name="excluir.png"></h:graphicImage>
+							</h:commandLink>
+						</h:form>
+					</h:column>
+				</h:dataTable>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,70 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="container">
+
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Lari Maia Bem Casados</a>
+			</div>
+
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="/home.xhtml">Home <span
+							class="sr-only">(selecionado)</span></a></li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-expanded="false">Cadastro
+							<span class="caret"></span>
+					</a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="/public/cliente.xhtml">Cliente</a></li>
+							<!-- <li><a href="/public/produto/pesquisa-cliente.xhtml">Cliente</a></li> -->
+							<li><a href="/public/cerimonial.xhtml">Cerimonial</a></li>
+							<li><a href="/public/embrulho.xhtml">Embrulho</a></li>
+							<li><a href="/public/produto.xhtml">Produto</a></li>
+
+						</ul></li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-expanded="false">Contratos<span
+							class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="/public/listaPedido.xhtml">Novo Contrato</a></li>
+							<li><a href="/public/consultaPedido.xhtml">Pesquisar Contrato</a></li>
+
+						</ul></li>
+
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-expanded="false">Configurações<span
+							class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="/public/estado.xhtml">Estado</a></li>
+							<li><a href="/public/usuario.xhtml">Usuário</a></li>
+						<!-- 	<li><a href="/public/papel.xhtml">Papel</a></li> -->
+
+
+						</ul></li>
+				</ul>
+				<ul class="nav navbar-nav pull-right">
+
+						<li class=""><a href="/site/admin/index.html">Sair</a></li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+			
+			
+			
+			
+
+		</div>
+	</nav>
+
+</ui:composition>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+<ui:composition template="layout.xhtml">
+	<f:metadata>
+		<f:viewParam name="id" value="#{clienteController.cliente.id}" />
+
+		<f:viewAction action="#{clienteController.buscar()}"
+			if="#{param.id ne null}" />
+	</f:metadata>
+
+	<ui:define name="head">	
+		Registro de clientes
+	</ui:define>
+
+	<ui:define name="body">
+		<h:form id="form">
+			<h:panelGroup layout="block" styleClass="form-group">
+				<h:messages errorClass="alert alert-danger"
+					infoClass="alert alert-info"
+					style="list-style: none; margin: 0; padding: 0" />
+			</h:panelGroup>
+
+			<!-- <h:panelGroup layout="block" styleClass="form-group" rendered="#{clienteController.cliente.id ne null}">
+				<h:outputLabel value="Código: " styleClass="control-label" />
+
+				<h:outputText value=" #{clienteController.cliente.id}" />
+			</h:panelGroup> -->
+
+			<h:panelGroup layout="block" styleClass="form-group">
+				<h:outputLabel value="Contratante: " styleClass="control-label" />
+
+				<h:inputText id="contratante" label="Contratante"
+					styleClass="form-control"
+					value="#{clienteController.cliente.contratante}" required="true" />
+			</h:panelGroup>
+
+			<h:panelGroup layout="block" styleClass="form-group">
+				<h:outputLabel value="CPF: " styleClass="control-label" />
+
+				<h:inputText id="cpf" label="CPF" styleClass="form-control"
+					value="#{clienteController.cliente.cpf}" required="true" />
+			</h:panelGroup>
+
+			<h:panelGroup layout="block" styleClass="form-group">
+				<h:outputLabel value="Nome Noivo(a): " styleClass="control-label" />
+
+				<h:inputText id="noivo" label="Noivos" styleClass="form-control"
+					value="#{clienteController.cliente.nomeNoivo}" required="true" />
+			</h:panelGroup>
+
+			<h:panelGroup layout="block" styleClass="form-group">
+				<h:outputLabel value="Telefone: " styleClass="control-label" />
+
+				<h:inputText id="telefone" label="Telefone"
+					styleClass="form-control"
+					value="#{clienteController.cliente.telefone}" />
+			</h:panelGroup>
+
+			<h:panelGroup layout="block" styleClass="form-group ">
+				<h:outputLabel value="Data Nascimento: " styleClass="control-label " />
+
+				<h:inputText id="nascimento" p:type="date"
+					styleClass="form-control " p:placeholder="dia/mês/ano"
+					value="#{clienteController.cliente.dataNascimento}" required="true"
+					requiredMessage="O campo email é obrigatorio">
+					<f:convertDateTime pattern="yyyy-MM-dd" locale="pt_BR" />
+				</h:inputText>
+			</h:panelGroup>
+
+			<h:panelGroup layout="block" styleClass="form-group">
+				<h:outputLabel value="E-mail: " styleClass="control-label" />
+
+				<h:inputText id="email" p:type="email" styleClass="form-control"
+					p:placeholder="jão@hightech.com"
+					value="#{clienteController.cliente.email}" required="true"
+					requiredMessage="O campo email é obrigatorio"
+					validatorMessage="E-mail incorreto">
+					<f:validateRegex
+						pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+				</h:inputText>
+			</h:panelGroup>
+			<h:panelGroup layout="block" styleClass="form-group">
+				<h:outputLabel value="CEP: " styleClass="control-label" />
+
+				<h:inputText id="cep" label="Cep" styleClass="form-control"
+					value="#{clienteController.cliente.endereco.cep}"
+					p:placeholder="Ex: 99999-999" maxlength="50" required="true"
+					requiredMessage="O campo cep é obrigatorio" />
+			</h:panelGroup>
+
+			<h:panelGroup layout="block" styleClass="form-group">
+				<h:outputLabel value="Logradoruro: " styleClass="control-label" />
+
+				<h:inputText id="logradouro" label="Logradoruro"
+					styleClass="form-control" p:placeholder="Ex: Av. Florestal"
+					value="#{clienteController.cliente.endereco.logradouro}"
+					maxlength="50" required="true"
+					requiredMessage="O campo logradouro é obrigatorio" />
+			</h:panelGroup>
+
+			<h:panelGroup layout="block" styleClass="form-group">
+				<h:outputLabel value="Bairro: " styleClass="control-label" />
+
+				<h:inputText id="bairro" label="Bairro" styleClass="form-control"
+					p:placeholder="Ex: Santa Carmélia"
+					value="#{clienteController.cliente.endereco.bairro}" maxlength="50"
+					required="true" requiredMessage="O campo bairro é obrigatorio" />
+			</h:panelGroup>
+
+			<h:panelGroup layout="block" styleClass="form-group">
+				<h:outputLabel value="Complemento: " styleClass="control-label" />
+
+				<h:inputText id="complemento" label="complemento"
+					styleClass="form-control" p:placeholder="Casa, Apartamento etc."
+					value="#{clienteController.cliente.endereco.complemento}"
+					maxlength="50" required="true"
+					requiredMessage="O campo contratante é obrigatorio" />
+			</h:panelGroup>
+
+			<h:panelGroup layout="block" styleClass="form-group">
+				<h:outputLabel value="Numero: " styleClass="control-label" />
+
+				<h:inputText id="number" p:type="number" p:min="1" p:max="10000"
+					styleClass="form-control" p:placeholder="Ex: 123"
+					value="#{clienteController.cliente.endereco.numero}"
+					required="true" requiredMessage="O campo numero é obrigatorio">
+					<f:convertNumber minFractionDigits="0" />
+				</h:inputText>
+			</h:panelGroup>
+
+			<h:panelGroup layout="block" styleClass="form-group">
+				<h:outputLabel value="Estado: " styleClass="control-label" />
+
+				<h:selectOneMenu id="estado" filter="true" styleClass="form-control"
+					value="#{clienteController.cliente.estado}"
+					converter="#{estadoConverter}" required="true"
+					requiredMessage="O campo estado é obrigatório">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione um Estado" />
+					<f:selectItems value="#{clienteController.estados}" var="estado"
+						itemValue="#{estado}" itemLabel="#{estado.uf}" />
+				</h:selectOneMenu>
+			</h:panelGroup>
+
+
+			<h:commandButton styleClass="btn btn-success"
+				action="#{clienteController.salvar}" value="Salvar">
+
+			</h:commandButton>
+			<h:commandButton styleClass="btn btn-default"
+				rendered="#{clienteController.modoEdicao}"
+				action="#{clienteController.cancelar}" value="Cancelar">
+				<f:ajax render="formCliente"></f:ajax>
+			</h:commandButton>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,113 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	template="../template/template.xhtml">
+
+	<ui:define name="title">Usuario</ui:define>
+	<ui:define name="container">
+		<div class="col-xs-12 col-md-6">
+			<h1 style="font-family: 'Lato'">Usuarios</h1>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12">
+				<h:form styleClass="form-horizontal">
+				
+				<h:messages errorClass="alert alert-danger"
+						infoClass="alert alert-info"
+						style="list-style: none; margin: 0; padding: 0" />
+						
+					<div class="form-group">
+						<h:outputLabel value="Nome:"
+							styleClass="control-label col-sm-2" />
+						<div class="col-sm-6">
+							<h:inputText id="nome" label="Nome" styleClass="form-control"
+								value="#{usuarioController.usuario.nome}" p:placeholder="Nome"
+								maxlength="50" />
+						</div>
+					</div>
+					<div class="form-group">
+						<h:outputLabel value="Login:"
+							styleClass="control-label col-sm-2" />
+						<div class="col-sm-6">
+							<h:inputText id="login" label="Login" styleClass="form-control"
+								value="#{usuarioController.usuario.login}" p:placeholder="login"
+								maxlength="50" />
+						</div>
+					</div>
+					<div class="form-group">
+						<h:outputLabel value="Senha:"
+							styleClass="control-label col-sm-2" />
+						<div class="col-sm-6">
+							<h:inputSecret value="#{usuarioController.usuario.senha}"
+								styleClass="form-control"
+								p:placeholder="Digite uma senha(Dica: não use senhas de outros lugares)" />
+						</div>
+					</div>
+					<div class="form-group">
+						<h:outputLabel value="Confirma Senha:"
+							styleClass="control-label col-sm-2" />
+						<div class="col-sm-6">
+							<h:inputSecret value="#{usuarioController.usuario.confirmaSenha}"
+								styleClass="form-control"
+								p:placeholder="Digite uma senha(Dica: não use senhas de outros lugares)" />
+						</div>
+					</div>
+						<div class="form-group">
+						<h:outputLabel value="Data Cadastro:"
+							styleClass="control-label col-sm-2" />
+						<div class="col-sm-6">
+							<h:inputText id="cadastro" p:type="date"
+								styleClass="form-control" p:placeholder="dia/mês/ano"
+								value="#{usuarioController.usuario.cadastro}"
+								required="true" requiredMessage="O campo email é obrigatorio">
+								<f:convertDateTime pattern="yyyy-MM-dd" locale="pt_BR" />
+							</h:inputText>
+						</div>
+					</div>
+						<div class="form-group">
+						<h:outputLabel value="Perfil:"
+							styleClass="control-label col-sm-2" />
+						<div class="col-sm-6">
+							<h:inputText value="#{usuarioController.usuario.papel}"
+								styleClass="form-control"
+								p:placeholder="Admin ou Usuario" />
+						</div>
+					</div>
+					
+					
+
+						<div class="form-group">
+							<h:outputLabel value="Email:"
+								styleClass="control-label col-sm-2" />
+							<div class="col-sm-6">
+								<h:inputText id="email" p:type="email"
+							converter="#{lowerCaseConverter}" styleClass="form-control"
+							p:placeholder="jão@hightech.com"
+							value="#{usuarioController.usuario.email}" required="true"
+							requiredMessage="O campo email é obrigatorio"
+							validatorMessage="E-mail incorreto">
+							<f:validateRegex
+								pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+						</h:inputText>
+							</div>
+						</div>
+						<div class="form-group">
+							<h:outputLabel value="Status:"
+								styleClass="control-label col-sm-2" />
+							<div class="col-sm-6">
+								<h:selectBooleanCheckbox styleClass="checkbox" id="c"
+								value="#{usuarioController.usuario.status}" />
+							</div>
+						</div>
+
+						
+				</h:form>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

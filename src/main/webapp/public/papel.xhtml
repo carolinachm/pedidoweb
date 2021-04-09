@@ -1,0 +1,192 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf" template="../template/template.xhtml">
+
+	<div class="container">
+		<ui:define name="container">
+		
+
+			<div class="col-xs-12 col-md-6">
+				<h1 style="font-family: 'Lato'">Papel</h1>
+			</div>
+
+
+			<h:form id="formTabela">
+
+
+				<h:dataTable id="tabela" value="#{papelController.papeis}"
+					var="papel" rules="rows" cellpadding="5"
+					styleClass="table table-striped table-bordered">
+					<h:column id="columnCodigo">
+						<f:facet name="header">
+							<h:outputText style="font-family: 'Lato' " id="headerCodigo"
+								value="Codigo" />
+						</f:facet>
+						<h:outputText id="valorCodigo" value="#{papel.id}" />
+					</h:column>
+
+					<h:column id="columnNome">
+						<f:facet name="header">
+							<h:outputText style="font-family: 'Lato'" id="headerNome"
+								value="Nome" />
+						</f:facet>
+						<h:outputText id="valorNome" value="#{papel.nome}" />
+					</h:column>
+
+
+					<h:column id="columnUsuario">
+						<f:facet name="header">
+							<h:outputText style="font-family: 'Lato'" id="headerUsuario"
+								value="Usuario" />
+						</f:facet>
+						<h:outputText style="font-family: 'Lato'" id="valorUsuario"
+							value="#{papel.usuario}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">Ação</f:facet>
+						<h:panelGrid columns="2">
+
+							<h:commandButton styleClass="btn btn-danger"
+								action="#{papelController.remove(papel)}" value="Excluir">
+
+								<f:passThroughAttribute name="data-toggle" value="modal" />
+								<f:passThroughAttribute name="data-target"
+									value="#delete-modal" />
+								<f:ajax render="formTabela:tabela" />
+							</h:commandButton>
+
+							<h:commandButton styleClass="btn btn-primary"
+								action="#{papelController.editar(papel)}" value="Editar">
+
+								<f:ajax render="formulario formTabela" />
+								<f:passThroughAttribute name="data-toggle" value="modal" />
+								<f:passThroughAttribute name="data-target" value="#NovaOS" />
+							</h:commandButton>
+						</h:panelGrid>
+
+					</h:column>
+
+				</h:dataTable>
+
+
+			</h:form>
+
+			<div class="modal fade" id="NovaOS">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">x</span>
+							</button>
+
+
+						</div>
+						<h:form id="formulario" style="font-family: 'Lato', Sans-Serif">
+
+
+							<div class="modal-body">
+
+								<div class="panel panel-default">
+									<div class="panel panel-heading">
+										<h:outputText id="titulo" value="Dados do Cerimonial"
+											style="font-family: 'Lato'" />
+									</div>
+									<div class="panel-body">
+										<div id="dados">
+											<div class="controls">
+												<h:outputText style="font-family: 'Lato'" id="nomeLabel"
+													value="Nome:" />
+												<h:inputText id="nome" label="Nome"
+													styleClass="form-control" data-dismiss="alert"
+													value="#{papelController.papel.nome}"
+													required="true"
+													requiredMessage="O campo nome é obrigatorio"
+													p:placeholder="Ex: Jão" maxlength="50" />
+
+											</div>
+
+											<div class="controls">
+												<h:outputLabel style="font-family: 'Lato'" for="usuario"
+														value="Usuario:" />
+													<h:selectOneMenu id="estado" filter="true"
+														styleClass="form-control"
+														value="#{papelController.papel.usuario}"
+														converter="#{usuarioConverter}" required="true"
+														requiredMessage="O campo estado é obrigatório">
+														<f:selectItem noSelectionOption="true"
+															itemLabel="Selecione um usuario" />
+														<f:selectItems value="#{papelController.papeis}"
+															var="papel" itemValue="#{papel}"
+															itemLabel="#{papel.usuario}" />
+													</h:selectOneMenu>
+
+											</div>
+
+										</div>
+									</div>
+
+
+									<div class="modal-footer">
+										<h:commandButton styleClass="btn btn-success"
+											data-dismiss="modal" action="#{papelController.save}"
+											value="Salvar">
+											<f:ajax execute="formulario" render="formulario formTabela"></f:ajax>
+										</h:commandButton>
+										<h:commandButton styleClass="btn btn-default"
+											rendered="#{papelController.modoEdicao}"
+											data-dismiss="modal"
+											action="#{papelController.cancelar}" value="Cancelar">
+											<f:ajax render="formulario"></f:ajax>
+										</h:commandButton>
+										<h:messages id="msg" />
+									</div>
+								</div>
+							</div>
+						</h:form>
+					</div>
+				</div>
+			</div>
+
+			<footer class="row">
+				<div class="col-sm-6">
+					<button class="btn btn-success" data-toggle="modal"
+						data-target="#NovaOS">Cerimonial</button>
+				</div>
+
+			</footer>
+			<!-- Modal -->
+			<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog"
+				aria-labelledby="modalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Fechar">
+								<span aria-hidden="true">x</span>
+							</button>
+							<h4 class="modal-title" id="modalLabel">Excluir Cerimonial</h4>
+						</div>
+						<div class="modal-body">Deseja realmente excluir este papel?
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary">Sim</button>
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Não</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<script>
+                $('#delete-modal').on('show.bs.modal', function(e) {
+                    $(this).find('.btn-primary').attr('href', $(e.relatedTarget).data('href'));
+                });
+            </script>
+		</ui:define>
+	</div>
+</ui:composition>

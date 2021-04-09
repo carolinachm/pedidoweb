@@ -1,0 +1,84 @@
+<ui:composition template="/template/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:define name="titulo">Dashboard</ui:define>
+
+	<ui:define name="container">
+		
+			<h:form>
+				Bem Vindo ao sistema <h:outputText value="#{usuarioLogadoController.usuario.login}" />
+				<br/><br/><br/>
+				
+				<div id="list" class="row">
+
+					<div class="table-responsive col-md-12">
+						<h:form>
+							<h:dataTable id="tabela" value="#{pedidoController.pedidos}"
+								var="p"
+								rules="rows" cellpadding="5" class="table table-striped table-bordered">
+								<h:column id="columnCodigo">
+									<f:facet name="header">
+										<h:outputText style="font-family: 'Lato' " id="headerCodigo"
+											value="Codigo" />
+									</f:facet>
+									<h:outputText id="valorCodigo" value="#{p.id}" />
+								</h:column>
+
+								<h:column id="columnContratante">
+									<f:facet name="header">
+										<h:outputText style="font-family: 'Lato'"
+											id="headerContratante" value="Contratante" />
+									</f:facet>
+									<h:outputText id="valorContratante"
+										value="#{p.cliente.contratante}" />
+								</h:column>
+
+								<h:column id="columnCerimonial">
+									<f:facet name="header">
+										<h:outputText style="font-family: 'Lato'"
+											id="headerCerimonial" value="Cerimonial" />
+									</f:facet>
+									<h:outputText id="valorCerimonial" value="#{p.cerimonial.nome}" />
+								</h:column>
+
+								<h:column id="columnDataPedido">
+									<f:facet name="header">
+										<h:outputText id="headerDataPedido"
+											style="font-family: 'Lato'" value="DataPedido" />
+									</f:facet>
+									<h:outputText id="valorDataPedido" value="#{p.dataPedido}">
+										<f:convertDateTime locale="pt_BR" />
+									</h:outputText>
+
+
+								</h:column>
+								<h:column id="columnDataEntrega">
+									<f:facet name="header">
+										<h:outputText style="font-family: 'Lato'"
+											id="headerDataEntrega" value="DataEntrega" />
+									</f:facet>
+									<h:outputText style="font-family: 'Lato'" id="valorDataEntrega"
+										value="#{p.dataEntrega}">
+										<f:convertDateTime locale="pt_BR" />
+									</h:outputText>
+
+								</h:column>
+
+
+							</h:dataTable>
+
+						
+						</h:form>
+
+
+					</div>
+
+				</div>
+			</h:form>
+	
+	</ui:define>
+
+</ui:composition>

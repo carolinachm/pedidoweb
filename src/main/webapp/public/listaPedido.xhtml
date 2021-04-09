@@ -1,0 +1,129 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	template="../template/template.xhtml">
+
+
+	<div class="container">
+		<ui:define name="container">
+			<div id="main" class="container-fluid" style="margin-top: 50px">
+
+				<div id="top" class="row">
+					<div class="col-sm-3">
+						<h2>Contratos</h2>
+					</div>
+
+				</div>
+
+				<div id="list" class="row">
+
+					<div class="table-responsive col-md-12">
+
+						<h:form>
+
+							<h:commandButton action="#{pedidoController.novo}"
+								value="Novo Contrato" styleClass="btn btn-success">
+
+							</h:commandButton>
+
+							<br />
+							<br />
+							<h:dataTable id="tabela" value="#{pedidoController.pedidos}"
+								var="pedido" rules="rows" cellpadding="5"
+								styleClass="table table-striped table-bordered">
+								<h:column id="columnCodigo">
+									<f:facet name="header">
+										<h:outputText style="font-family: 'Lato' " id="headerCodigo"
+											value="Codigo" />
+									</f:facet>
+									<h:outputText id="valorCodigo" value="#{pedido.id}" />
+								</h:column>
+
+								<h:column id="columnContratante">
+									<f:facet name="header">
+										<h:outputText style="font-family: 'Lato'"
+											id="headerContratante" value="Contratante" />
+									</f:facet>
+									<h:outputText id="valorContratante"
+										value="#{pedido.cliente.contratante}" />
+								</h:column>
+
+								<h:column id="columnCerimonial">
+									<f:facet name="header">
+										<h:outputText style="font-family: 'Lato'"
+											id="headerCerimonial" value="Cerimonial" />
+									</f:facet>
+									<h:outputText id="valorCerimonial"
+										value="#{pedido.cerimonial.nome}" />
+								</h:column>
+
+								<h:column id="columnDataPedido">
+									<f:facet name="header">
+										<h:outputText id="headerDataPedido"
+											style="font-family: 'Lato'"
+											value="Data da Assinatura do Contrato" />
+									</f:facet>
+									<h:outputText id="valorDataPedido" value="#{pedido.dataPedido}">
+										<f:convertDateTime locale="pt_BR" />
+									</h:outputText>
+
+
+								</h:column>
+								<h:column id="columnDataEntrega">
+									<f:facet name="header">
+										<h:outputText style="font-family: 'Lato'"
+											id="headerDataEntrega" value="DataEntrega" />
+									</f:facet>
+									<h:outputText style="font-family: 'Lato'" id="valorDataEntrega"
+										value="#{pedido.dataEntrega}">
+										<f:convertDateTime locale="pt_BR" />
+									</h:outputText>
+
+								</h:column>
+
+								<h:column id="columnFormaPagamento">
+									<f:facet name="header">
+										<h:outputText style="font-family: 'Lato'"
+											id="headerFormaPagamento" value="FormaPagamento" />
+									</f:facet>
+									<h:outputText style="font-family: 'Lato'"
+										id="valorFormaPagamento" value="#{pedido.formaPagamento}">
+									</h:outputText>
+
+								</h:column>
+
+
+								<h:column>
+									<f:facet name="header">Ações</f:facet>
+
+									<h:outputLink value="cadastroPedido.xhtml?id=#{pedido.id}"
+										title="Editar">
+										<h:graphicImage library="img" name="editar.png"></h:graphicImage>
+									</h:outputLink>
+
+									<h:commandLink action="#{pedidoController.excluir(pedido)}"
+										title="Excluir">
+										<f:param name="id" value="#{pedido.id}" />
+										<h:graphicImage library="img" name="excluir.png"></h:graphicImage>
+									</h:commandLink>
+								</h:column>
+							</h:dataTable>
+
+
+
+						</h:form>
+
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</ui:define>
+	</div>
+</ui:composition>
